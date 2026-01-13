@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Login</title>
+  <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+<style>
+body{font-family:Poppins}
+</style>
+
+  <style>
+    body { font-family: Arial; background:#f2f4f8; display:flex; justify-content:center; align-items:center; height:100vh; }
+    .box { background:white; padding:30px; border-radius:10px; width:300px; }
+    input,button{ width:100%; padding:10px; margin:10px 0; }
+    button{ background:#111827; color:white; border:none; }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>User Login</h2>
+  <input id="email" placeholder="Email">
+  <input id="pass" type="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-auth-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCux0iKyvFaZ7c8Gc8Tihcl_tULz4vh0Ok",
+  authDomain: "gym-management-system-5829d.firebaseapp.com",
+  projectId: "gym-management-system-5829d"
+};
+firebase.initializeApp(firebaseConfig);
+
+function login(){
+  firebase.auth().signInWithEmailAndPassword(email.value, pass.value)
+  .then(()=>window.location="user-dashboard.html")
+  .catch(e=>alert(e.message));
+}
+</script>
+
+</body>
+</html>

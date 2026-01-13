@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Member Dashboard</title>
+  <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+<style>
+body{font-family:Poppins}
+</style>
+
+  <style>
+    body { font-family: Arial; background:#f2f4f8; margin:0; }
+    header { background:#111827; color:white; padding:15px; text-align:center; }
+    .box { background:white; margin:15px; padding:15px; border-radius:8px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h2>Member Dashboard</h2>
+</header>
+
+<div class="box">
+  <h3>Your Bills</h3>
+  <div id="bills"></div>
+</div>
+
+<div class="box">
+  <h3>Notifications</h3>
+  <div id="notes"></div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCux0iKyvFaZ7c8Gc8Tihcl_tULz4vh0Ok",
+  authDomain: "gym-management-system-5829d.firebaseapp.com",
+  projectId: "gym-management-system-5829d"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+firebase.auth().onAuthStateChanged(user=>{
+  if(user){
+    db.collection("bills").where("member","==",user.email).onSnapshot(s=>{
+      bills.innerHTML="";
+      s.forEach(d=>{
+        let b=d.data();
+        bills.innerHTML+=`<div>${b.month} - ₹${b.amount}</div>`;
+      });
+    });
+
+    db.collection("notifications").onSnapshot(s=>{
+      notes.innerHTML="";
+      s.forEach(d=>{
+        notes.innerHTML+=`<div>${d.data().message}</div>`;
+      });
+    });
+  }
+});
+</script>
+
+</body>
+</html>
